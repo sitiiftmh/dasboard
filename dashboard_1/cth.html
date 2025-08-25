@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OSS Kota Batam 2025</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Chart.js & DataTables CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+  <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+  <style>
+    .chart-box canvas {
+      max-width: 100%;
+    }
+    .table-box {
+      background: white;
+      padding: 10px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      overflow-x: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <h2>OSS Batam</h2>
+    <nav>
+      <a href="ini.html">📊 Dashboard</a>
+      <a href="ini2.html">📁 Proyek</a>
+      <a href="ini3.html">📈 Statistik</a>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main">
+    <header class="header">
+      <h1>Dashboard OSS Kota Batam 2025</h1>
+    </header>
+
+    <!-- Statistik -->
+    <section class="stats">
+      <div class="card">📄 NIB Terbit <span>22,082</span></div>
+      <div class="card">🏗️ Proyek <span>56,072</span></div>
+      <div class="card">🏙️ Kecamatan <span>12</span></div>
+      <div class="card">🏘️ Kelurahan <span>63</span></div>
+      <div class="card">💰 Investasi <span>Rp 496T+</span></div>
+      <div class="card">👷‍♂️ TKI <span>307,904</span></div>
+    </section>
+
+    <!-- Charts -->
+    <section class="charts">
+      <div class="chart-box">
+        <h3>Status Izin (PMDN / PMA)</h3>
+        <canvas id="statusChart"></canvas>
+      </div>
+      <div class="chart-box">
+        <h3>Distribusi Kewenangan Perizinan</h3>
+        <canvas id="pieChart"></canvas>
+      </div>
+    </section>
+
+    <!-- Tabel Perizinan -->
+    <section class="chart-footer">
+      <div class="table-box">
+        <h3>Sebaran Perizinan Berdasarkan Jenis</h3>
+        <table id="jenisTable" class="display">
+          <thead><tr><th>Jenis Perizinan</th><th>Record Count</th></tr></thead>
+          <tbody>
+            <tr><td>Persyaratan Dasar</td><td>19208</td></tr>
+            <tr><td>Sertifikat Standar</td><td>4889</td></tr>
+            <tr><td>UMKU</td><td>1882</td></tr>
+            <tr><td>Izin</td><td>98</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="table-box">
+        <h3>Status Respon Perizinan</h3>
+        <table id="responTable" class="display">
+          <thead><tr><th>Status</th><th>Record Count</th></tr></thead>
+          <tbody>
+            <tr><td>Terbit Otomatis</td><td>23554</td></tr>
+            <tr><td>Izin Terverifikasi</td><td>1985</td></tr>
+            <tr><td>Menunggu Verifikasi</td><td>538</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="table-box">
+        <h3>Data Berdasarkan Resiko</h3>
+        <table id="resikoTable" class="display">
+          <thead><tr><th>Kode Resiko</th><th>Record Count</th></tr></thead>
+          <tbody>
+            <tr><td>R</td><td>14238</td></tr>
+            <tr><td>MR</td><td>10349</td></tr>
+            <tr><td>MT</td><td>879</td></tr>
+            <tr><td>T</td><td>561</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+<script>
+  // DataTables
+  $(document).ready(function () {
+    $('#jenisTable').DataTable();
+    $('#responTable').DataTable();
+    $('#resikoTable').DataTable();
+  });
+
+  // Bar Chart PMDN / PMA
+  new Chart(document.getElementById('statusChart'), {
+    type: 'bar',
+    data: {
+      labels: ['PMDN', 'PMA'],
+      datasets: [{
+        label: 'Record Count',
+        data: [26051, 26],
+        backgroundColor: ['#4285F4', '#EA4335']
+      }]
+    },
+    options: {
+      plugins: {
+        legend: { display: false }
+      },
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+
+  // Pie Chart Kewenangan
+  new Chart(document.getElementById('pieChart'), {
+    type: 'pie',
+    data: {
+      labels: [
+        'Kementerian LH', 'BPOM', 'Kemenperin', 'ATR/BPN', 'Pariwisata',
+        'Kesehatan', 'Kelautan', 'PUPR', 'Perdagangan', 'Others'
+      ],
+      datasets: [{
+        data: [30000, 4800, 4000, 2500, 2000, 1800, 1600, 1200, 1000, 800],
+        backgroundColor: [
+          '#3366cc', '#dc3912', '#ff9900', '#109618', '#990099',
+          '#0099c6', '#dd4477', '#66aa00', '#b82e2e', '#aaaaaa'
+        ]
+      }]
+    }
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard KBLI & Sektor Pembina</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+<body>
+ 
+<!-- Navbar -->
+  <header class="navbar">
+    <div class="brand">OSS Kota Batam</div>
+    <nav class="nav-links">
+      <a href="a.html">📊 Dashboard</a>
+      <a href="b.html">📁 Proyek</a>
+      <a href="#">📈 Statistik</a>
+    </nav>
+  </header>
+
+  <!-- Konten Utama -->
+  <div class="container">
+    <h2>Dashboard OSS Kota Batam 2025</h2>
+<div class="section-title">KBLI (Klasifikasi Baku Lapangan Usaha Indonesia)</div>
+
+
+
+
+<div class="container">
+  <!-- Bar Chart KBLI -->
+  <div class="chart-box">
+    <canvas id="kbliBarChart"></canvas>
+  </div>
+
+  <!-- Bar Chart Sektor Pembina -->
+  <div class="chart-box">
+<div class="section-title">Sektor Pembina</div>
+    <canvas id="sektorPembinaChart"></canvas>
+  </div>
+</div>
+
+<div class="container">
+  <!-- Pie Chart Jenis Perusahaan -->
+  <div class="chart-box">
+    <div class="section-title">Jenis Perusahaan</div>
+    <canvas id="jenisPerusahaanChart"></canvas>
+  </div>
+
+  <!-- Bar Chart Skala Usaha -->
+  <div class="chart-box">
+    <div class="section-title">Skala Usaha</div>
+    <canvas id="skalaUsahaChart"></canvas>
+  </div>
+
+  <!-- Bar Chart Skala Risiko -->
+  <div class="chart-box">
+    <div class="section-title">Skala Resiko</div>
+    <canvas id="skalaRisikoChart"></canvas>
+  </div>
+</div>
+
+<script>
+  // KBLI Horizontal Bar
+  new Chart(document.getElementById('kbliBarChart'), {
+    type: 'bar',
+    data: {
+      labels: [
+        "Kedai Makanan", "Jasa Perorangan", "Jasa Penunjang Fasilitas", 
+        "Roti dan Kue", "Makanan Lainnya", "Kerupuk/Peyek", 
+        "Minimarket/Makanan", "Eceran Gas Elpiji", "Warung Makan"
+      ],
+      datasets: [{
+        label: "Jumlah",
+        data: [2330, 1490, 1418, 1277, 1070, 1016, 947, 899, 883],
+        backgroundColor: '#28a745'
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      plugins: { legend: { display: false } }
+    }
+  });
+
+  // Sektor Pembina
+  new Chart(document.getElementById('sektorPembinaChart'), {
+    type: 'bar',
+    data: {
+      labels: [
+        "Kementerian Perdagangan", "Kementerian Perindustrian", "Kementerian Pariwisata", 
+        "Kementerian PU", "Kementerian ESDM"
+      ],
+      datasets: [{
+        label: "Record Count",
+        data: [21091, 12370, 7098, 6534, 2005],
+        backgroundColor: '#1f77b4'
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      plugins: { legend: { display: false } }
+    }
+  });
+
+  // Pie Chart Jenis Perusahaan
+  new Chart(document.getElementById('jenisPerusahaanChart'), {
+    type: 'pie',
+    data: {
+      labels: ["Perorangan", "Perseroan Terbatas", "CV", "Koperasi", "Yayasan", "Dll"],
+      datasets: [{
+        data: [79.2, 12, 4, 2, 1, 1.8],
+        backgroundColor: ['#0074D9', '#FF4136', '#FF851B', '#2ECC40', '#B10DC9', '#AAAAAA']
+      }]
+    }
+  });
+
+  // Skala Usaha
+  new Chart(document.getElementById('skalaUsahaChart'), {
+    type: 'bar',
+    data: {
+      labels: ["Usaha Mikro", "Usaha Kecil", "Usaha Besar", "Usaha Menengah"],
+      datasets: [{
+        label: "Jumlah",
+        data: [40939, 10849, 3477, 807],
+        backgroundColor: '#17a2b8'
+      }]
+    },
+    options: {
+      plugins: { legend: { display: false } }
+    }
+  });
+
+  // Skala Risiko
+  new Chart(document.getElementById('skalaRisikoChart'), {
+    type: 'bar',
+    data: {
+      labels: ["Rendah", "Menengah Rendah", "Menengah Tinggi", "Tinggi"],
+      datasets: [{
+        label: "Jumlah",
+        data: [36606, 7026, 9311, 3129],
+        backgroundColor: '#ffc107'
+      }]
+    },
+    options: {
+      plugins: { legend: { display: false } }
+    }
+  });
+</script>
+
+</body>
+</html>

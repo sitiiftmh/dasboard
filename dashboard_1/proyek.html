@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard KBLI OSS Batam</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <aside class="sidebar">
+    <h2>OSS Batam</h2>
+    <nav>
+      <a href="index.html">📊 Dashboard</a>
+      <a href="proyek.html">📁 Proyek</a>
+      <a href="kbli.html">📋 KBLI</a>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <header class="header">
+      <h1>Dashboard OSS Kota Batam 2024</h1>
+    </header>
+
+    <section class="stats yellow-box">
+      <h2>KBLI (Klasifikasi Baku Lapangan Usaha Indonesia)</h2>
+    </section>
+
+    <!-- Grafik KBLI -->
+    <section class="charts">
+      <div class="chart-box full">
+        <canvas id="kbliChart"></canvas>
+      </div>
+    </section>
+
+    <!-- Sektor Pembina -->
+    <section class="charts">
+      <div class="chart-box full">
+        <h3>Sektor Pembina</h3>
+        <canvas id="sektorChart"></canvas>
+      </div>
+    </section>
+
+    <!-- Jenis Perusahaan, Skala Usaha, Skala Risiko -->
+    <section class="charts">
+      <div class="chart-box">
+        <h3>Jenis Perusahaan</h3>
+        <canvas id="jenisChart"></canvas>
+      </div>
+      <div class="chart-box">
+        <h3>Skala Usaha</h3>
+        <ul>
+          <li>Usaha Mikro: 40,939</li>
+          <li>Usaha Kecil: 10,849</li>
+          <li>Usaha Besar: 3,477</li>
+          <li>Usaha Menengah: 807</li>
+        </ul>
+      </div>
+      <div class="chart-box">
+        <h3>Skala Risiko</h3>
+        <ul>
+          <li>Rendah: 36,606</li>
+          <li>Menengah Rendah: 7,026</li>
+          <li>Menengah Tinggi: 9,311</li>
+          <li>Tinggi: 3,129</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <script src="charts.js"></script>
+</body>
+</html>

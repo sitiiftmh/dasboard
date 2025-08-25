@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard KBLI & Sektor Pembina</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #eef2f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 250px;
+            height: 100vh;
+            background-color: #004d40;
+            color: #ecf0f1;
+            padding: 20px;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 1001;
+            box-sizing: border-box;
+        }
+        .sidebar h2 {
+            margin-top: 0;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        .sidebar nav a {
+            display: block;
+            color: #bdc3c7;
+            text-decoration: none;
+            padding: 15px 20px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .sidebar nav a:hover {
+            background-color: #34495e;
+            color: #ffffff;
+        }
+        .sidebar nav a.active {
+            background-color: #3498db;
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        .main-content {
+            margin-left: 250px;
+            padding: 25px;
+            width: 100%;
+            box-sizing: border-box;
+            background-color: #eef2f5;
+        }
+        
+        .main-header {
+            background-color: #ffffff;
+            padding: 20px 25px;
+            font-size: 28px;
+            font-weight: bold;
+            color: #333;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border-radius: 12px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .section-title {
+            background: #34495e;
+            color: #ecf0f1;
+            padding: 15px;
+            font-weight: 600;
+            text-align: center;
+            border-radius: 8px;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .charts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+        }
+        .chart-box {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .chart-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+        .chart-box h4 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #34495e;
+            margin-top: 0;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .chart-container {
+            position: relative;
+            height: 300px; /* Atur tinggi tetap untuk bagan */
+        }
+
+        @media (max-width: 992px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                box-shadow: none;
+                border-radius: 0;
+            }
+            .main-content {
+                margin-left: 0;
+            }
+            .main-header {
+                border-radius: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <aside class="sidebar">
+        <h2>OSS Batam</h2>
+        <nav>
+            <a href="ini.html" class="active">📊 Dashboard</a>
+            <a href="ini2.html">📁 Proyek</a>
+            <a href="ini3.html">📈 Statistik</a>
+        </nav>
+    </aside>
+
+    <div class="main-content">
+        <div class="main-header">Dashboard KBLI & Sektor Pembina</div>
+
+        <div class="section-title">Statistik KBLI dan Sektor</div>
+        <div class="charts-container">
+            <div class="chart-box">
+                <h4>Top 10 KBLI</h4>
+                <div class="chart-container"><canvas id="kbliBarChart"></canvas></div>
+            </div>
+            <div class="chart-box">
+                <h4>Top 5 Sektor Pembina</h4>
+                <div class="chart-container"><canvas id="sektorPembinaChart"></canvas></div>
+            </div>
+            <div class="chart-box">
+                <h4>Jenis Perusahaan</h4>
+                <div class="chart-container"><canvas id="jenisPerusahaanChart"></canvas></div>
+            </div>
+            <div class="chart-box">
+                <h4>Skala Usaha</h4>
+                <div class="chart-container"><canvas id="skalaUsahaChart"></canvas></div>
+            </div>
+            <div class="chart-box">
+                <h4>Skala Risiko</h4>
+                <div class="chart-container"><canvas id="skalaRisikoChart"></canvas></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // KBLI Horizontal Bar
+        new Chart(document.getElementById('kbliBarChart'), {
+            type: 'bar',
+            data: {
+                labels: [
+                    "Kedai Makanan", "Jasa Perorangan", "Jasa Penunjang Fasilitas", 
+                    "Roti dan Kue", "Makanan Lainnya", "Kerupuk/Peyek", 
+                    "Minimarket/Makanan", "Eceran Gas Elpiji", "Warung Makan"
+                ],
+                datasets: [{
+                    label: "Jumlah",
+                    data: [2330, 1490, 1418, 1277, 1070, 1016, 947, 899, 883],
+                    backgroundColor: '#3498db'
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                plugins: { legend: { display: false } },
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+
+        // Sektor Pembina
+        new Chart(document.getElementById('sektorPembinaChart'), {
+            type: 'bar',
+            data: {
+                labels: [
+                    "Kementerian Perdagangan", "Kementerian Perindustrian", "Kementerian Pariwisata", 
+                    "Kementerian PU", "Kementerian ESDM"
+                ],
+                datasets: [{
+                    label: "Record Count",
+                    data: [21091, 12370, 7098, 6534, 2005],
+                    backgroundColor: '#e74c3c'
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                plugins: { legend: { display: false } },
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+
+        // Pie Chart Jenis Perusahaan
+        new Chart(document.getElementById('jenisPerusahaanChart'), {
+            type: 'pie',
+            data: {
+                labels: ["Perorangan", "Perseroan Terbatas", "CV", "Koperasi", "Yayasan", "Dll"],
+                datasets: [{
+                    data: [79.2, 12, 4, 2, 1, 1.8],
+                    backgroundColor: ['#3498db', '#e74c3c', '#f1c40f', '#2ecc71', '#9b59b6', '#bdc3c7']
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+
+        // Skala Usaha
+        new Chart(document.getElementById('skalaUsahaChart'), {
+            type: 'bar',
+            data: {
+                labels: ["Usaha Mikro", "Usaha Kecil", "Usaha Besar", "Usaha Menengah"],
+                datasets: [{
+                    label: "Jumlah",
+                    data: [40939, 10849, 3477, 807],
+                    backgroundColor: '#1abc9c'
+                }]
+            },
+            options: {
+                plugins: { legend: { display: false } },
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+
+        // Skala Risiko
+        new Chart(document.getElementById('skalaRisikoChart'), {
+            type: 'bar',
+            data: {
+                labels: ["Rendah", "Menengah Rendah", "Menengah Tinggi", "Tinggi"],
+                datasets: [{
+                    label: "Jumlah",
+                    data: [36606, 7026, 9311, 3129],
+                    backgroundColor: '#f39c12'
+                }]
+            },
+            options: {
+                plugins: { legend: { display: false } },
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+    </script>
+</body>
+</html>

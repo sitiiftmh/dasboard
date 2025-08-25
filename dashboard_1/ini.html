@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dashboard OSS Kota Batam 2025</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #edf6e5;
+        margin: 0;
+        padding: 0;
+      }
+
+      /* Sidebar styling - sampai atas */
+     .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 250px;
+            height: 100vh;
+            background-color: #004d40;
+            color: #ecf0f1;
+            padding: 20px;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 1001;
+            box-sizing: border-box;
+      }
+
+      /* Header di bagian paling atas */
+      header {
+        background-color: #ffffff;
+        padding: 20px;
+        font-size: 24px;
+        font-weight: bold;
+        text-align: center;
+        color: #444;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        position: fixed;
+        top: 0;
+        left: 200px; /* Mulai setelah sidebar */
+        right: 0;
+        z-index: 1000;
+        box-sizing: border-box;
+      }
+
+      .sidebar h2 {
+        margin-top: 0;
+        font-size: 20px;
+        margin-bottom: 30px;
+      }
+
+      .sidebar nav a {
+        display: block;
+        color: white;
+        text-decoration: none;
+        padding: 10px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        margin-bottom: 5px;
+      }
+
+      .sidebar nav a:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+        padding-left: 10px;
+        transition: all 0.3s ease;
+      }
+
+      .container {
+        margin-left: 240px; /* Beri ruang untuk sidebar */
+        margin-top: 84px; /* Beri ruang untuk header */
+        padding: 20px;
+      }
+
+      .info-boxes {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+        margin-bottom: 20px;
+      }
+      .info-box {
+        background-color: #336960;
+        color: white;
+        flex: 1;
+        min-width: 150px;
+        text-align: center;
+        padding: 20px;
+        border-radius: 8px;
+        font-size: 18px;
+      }
+      .charts-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+      .chart-container {
+        flex: 1;
+        min-width: 300px;
+        background: #fff;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+      }
+      iframe {
+        width: 100%;
+        height: 300px;
+        border: 0;
+        border-radius: 8px;
+      }
+
+      /* Responsive design */
+      @media (max-width: 768px) {
+        .sidebar {
+          width: 100%;
+          height: auto;
+          position: relative;
+          top: 0;
+          z-index: 999;
+        }
+
+        .container {
+          margin-left: 0;
+          margin-top: 0;
+        }
+
+        header {
+          position: relative;
+          left: 0;
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header di bagian paling atas -->
+    <header>Dashboard OSS Kota Batam 2025</header>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <h2>OSS Batam</h2>
+      <nav>
+        <a href="ini.html">📊 Dashboard</a>
+        <a href="ini2.html">📁 Proyek</a>
+        <a href="ini3.html">📈 Statistik</a>
+      </nav>
+    </aside>
+
+    <div class="container">
+      <!-- Info Boxes -->
+      <div class="info-boxes">
+        <div class="info-box">NIB Terbit<br /><strong>22,082</strong></div>
+        <div class="info-box">Proyek<br /><strong>56,072</strong></div>
+        <div class="info-box">Kecamatan<br /><strong>12</strong></div>
+        <div class="info-box">Kelurahan<br /><strong>63</strong></div>
+        <div class="info-box">
+          Nilai Investasi (Rp)<br /><strong>496.4 T</strong>
+        </div>
+        <div class="info-box">TKI<br /><strong>307,904</strong></div>
+      </div>
+
+      <!-- Charts -->
+      <div class="charts-row">
+        <div class="chart-container">
+          <canvas id="barChart"></canvas>
+        </div>
+        <div class="chart-container">
+          <canvas id="pieChart"></canvas>
+        </div>
+        <div class="chart-container">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d199502.7329797062!2d103.86299077315949!3d1.0823278751053288!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da3f85a5dfb32b%3A0xf5a9b909177f92a9!2sBatam%2C%20Kota%20Batam%2C%20Kepulauan%20Riau!5e0!3m2!1sid!2sid!4v1691597822536"
+            allowfullscreen=""
+            loading="lazy"
+          >
+          </iframe>
+        </div>
+      </div>
+
+      <!-- Line Chart -->
+      <div class="chart-container" style="margin-top: 20px">
+        <canvas id="lineChart"></canvas>
+      </div>
+    </div>
+
+    <script>
+      // Bar Chart
+      new Chart(document.getElementById("barChart"), {
+        type: "bar",
+        data: {
+          labels: [
+            "Batam Kota",
+            "Sekupang",
+            "Sagulung",
+            "Bengkong",
+            "Nongsa",
+            "Sei Beduk",
+            "Batu Aji",
+            "Lubuk Baja",
+            "Batu Ampar",
+            "Belakang Padang",
+            "Bulang",
+            "Galang",
+          ],
+          datasets: [
+            {
+              label: "NIB Terbit",
+              data: [
+                4245, 3555, 3119, 2247, 1978, 1780, 1562, 937, 327, 284, 262,
+              ],
+              backgroundColor: "#28a745",
+            },
+          ],
+        },
+      });
+
+      // Pie Chart
+      new Chart(document.getElementById("pieChart"), {
+        type: "pie",
+        data: {
+          labels: [
+            "Batam Kota",
+            "Sekupang",
+            "Sagulung",
+            "Bengkong",
+            "Nongsa",
+            "Sei Beduk",
+            "Batu Aji",
+            "Lubuk Baja",
+            "Batu Ampar",
+            "Belakang Padang",
+            "Bulang",
+            "Galang",
+          ],
+          datasets: [
+            {
+              label: "Distribusi",
+              data: [19.2, 16.1, 14.1, 10.2, 9.2, 8.1, 8.1],
+              backgroundColor: [
+                "#0074D9",
+                "#FF4136",
+                "#FF851B",
+                "#2ECC40",
+                "#B10DC9",
+                "#AAAAAA",
+                "#00FFFF",
+                "#A52A2A",
+                "#5F9EA0",
+                "#FF7F50",
+                "#6495ED",
+                "#DC143C",
+              ],
+            },
+          ],
+        },
+      });
+
+      // Line Chart
+      new Chart(document.getElementById("lineChart"), {
+        type: "line",
+        data: {
+          labels: Array.from({ length: 30 }, (_, i) => `Day ${i + 1}`),
+          datasets: [
+            {
+              label: "Perkembangan NIB Terbit",
+              data: Array.from(
+                { length: 30 },
+                () => Math.floor(Math.random() * 1000) + 100
+              ),
+              borderColor: "#2e8b57",
+              fill: false,
+            },
+          ],
+        },
+      });
+    </script>
+  </body>
+</html>

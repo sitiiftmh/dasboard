@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard OSS Kota Batam 2025</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+   <link rel="stylesheet" href="gaya.css" />
+</head>
+<body>
+
+<!-- Navbar -->
+  <header class="navbar">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQblC1zNEThvwyvTa5zEl4IJHmZYvV_41EgKAiVVkwfp6Fs4YHw_XhjSRyxrCL0DVG_k5s&usqp=CAU" alt="Logo" class="logo">
+    <div class="brand">OSS Kota Batam</div>
+    <nav class="nav-links">
+      <a href="a.html">📊 Dashboard</a>
+      <a href="b.html">📁 Proyek</a>
+      <a href="#">📈 Statistik</a>
+    </nav>
+  </header>
+
+  <!-- Konten Utama -->
+  <div class="container">
+    <h2>Dashboard OSS Kota Batam 2025</h2>
+
+    <!-- Info Boxes -->
+    <div class="info-top">
+      <div class="info-box">NIB Terbit<br><strong>22,082</strong></div>
+      <div class="info-box">Proyek<br><strong>56,072</strong></div>
+      <div class="info-box">TKI<br><strong>307,904</strong></div>
+    </div>
+    <div class="info-bottom">
+      <div class="info-box">Kecamatan<br><strong>12</strong></div>
+      <div class="info-box">Kelurahan<br><strong>63</strong></div>
+      <div class="info-box">Nilai Investasi (Rp)<br><strong>496.4 T</strong></div>
+    </div>
+
+    <!-- Grafik & Peta -->
+    <div class="charts-row">
+      <div class="chart-container">
+        <h3>NIB Terbit per Kecamatan</h3>
+        <canvas id="barChart"></canvas>
+      </div>
+      <div class="charts-row">
+        <div class="chart-container">
+            <h3>PMA/PMDN</h3>
+            <canvas id="pmaPmdnChart"></canvas>
+        </div>
+
+      <div class="chart-container">
+        <h3>Distribusi NIB (%)</h3>
+        <canvas id="pieChart"></canvas>
+      </div>
+
+      <div class="chart-container">
+        <h3>Peta Kota Batam</h3>
+        <iframe 
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d199502.7329797062!2d103.86299077315949!3d1.0823278751053288!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da3f85a5dfb32b%3A0xf5a9b909177f92a9!2sBatam%2C%20Kota%20Batam%2C%20Kepulauan%20Riau!5e0!3m2!1sid!2sid!4v1691597822536"
+          allowfullscreen="" loading="lazy">
+        </iframe>
+      </div>
+
+      <div class="chart-container">
+        <h3>Perkembangan NIB Terbit (30 Hari)</h3>
+        <canvas id="lineChart"></canvas>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Script Chart.js -->
+  <script>
+    const kecamatan = ["Batam Kota", "Sekupang", "Sagulung", "Bengkong", "Nongsa", "Sei Beduk", "Batu Aji", "Lubuk Baja", "Batu Ampar", "Belakang Padang", "Bulang", "Galang"];
+    const barData = [4245, 3555, 3119, 2247, 1978, 1780, 1562, 937, 327, 284, 262, 276];
+    const pieData = [19.2, 16.1, 14.1, 10.2, 9.2, 8.1, 8.1, 5.1, 4.0, 3.0, 1.5, 1.5];
+
+    // Bar Chart
+    new Chart(document.getElementById("barChart"), {
+      type: 'bar',
+      data: {
+        labels: kecamatan,
+        datasets: [{
+          label: "NIB Terbit",
+          data: barData,
+          backgroundColor: '#28a745'
+        }]
+      },
+      options: {
+        plugins: {
+          legend: { display: false },
+          tooltip: { enabled: true }
+        },
+        responsive: true,
+        scales: {
+          y: { beginAtZero: true }
+        }
+      }
+    });
+
+    // Pie Chart
+    new Chart(document.getElementById("pieChart"), {
+      type: 'pie',
+      data: {
+        labels: kecamatan,
+        datasets: [{
+          label: "Distribusi",
+          data: pieData,
+          backgroundColor: [
+            "#0074D9", "#FF4136", "#FF851B", "#2ECC40", "#B10DC9", "#AAAAAA",
+            "#00FFFF", "#A52A2A", "#5F9EA0", "#FF7F50", "#6495ED", "#DC143C"
+          ]
+        }]
+      },
+      options: {
+        plugins: {
+          legend: {
+            position: 'bottom'
+          },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                return `${context.label}: ${context.formattedValue}%`;
+              }
+            }
+          }
+        },
+        responsive: true
+      }
+    });
+
+    // PMA / PMDN Chart
+new Chart(document.getElementById("pmaPmdnChart"), {
+  type: 'bar',
+  data: {
+    labels: ["PMDN", "PMA"],
+    datasets: [{
+      label: "Jumlah",
+      data: [21822, 260],
+      backgroundColor: ["#28a745", "#ffc107"]
+    }]
+  },
+  options: {
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: function(context) {
+            return `${context.label}: ${context.formattedValue}`;
+          }
+        }
+      }
+    },
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    }
+  }
+});
+
+
+    // Line Chart
+    new Chart(document.getElementById("lineChart"), {
+      type: 'line',
+      data: {
+        labels: Array.from({length: 30}, (_, i) => `Hari ${i+1}`),
+        datasets: [{
+          label: "Perkembangan NIB",
+          data: Array.from({length: 30}, () => Math.floor(Math.random() * 1000) + 100),
+          borderColor: "#2e8b57",
+          fill: false,
+          tension: 0.3
+        }]
+      },
+      options: {
+        plugins: {
+          legend: {
+            position: 'top'
+          }
+        },
+        responsive: true
+      }
+    });
+  </script>
+</body>
+</html>
